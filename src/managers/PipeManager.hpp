@@ -1,31 +1,58 @@
-﻿/*
-Mục đích
-- Nơi dự kiến khai báo bộ quản lý việc sinh và vòng đời của ống.
+#pragma once
 
-Trách nhiệm dự kiến
-- Quản lý tập ống đang hoạt động.
-- Sinh ống theo đúng khoảng thời gian.
-- Cập nhật và xóa ống theo thời gian.
-- Cung cấp quyền truy cập tới ống đang hoạt động cho phần vẽ, va chạm và tính điểm.
+#include <vector>
+#include <SFML/Graphics.hpp>
+#include "../entities/Pipe.hpp"
 
-Dữ liệu chính dự kiến có ở đây
-- Container chứa các ống hoặc cặp ống đang hoạt động.
-- Bộ đếm thời gian sinh.
-- Công cụ ngẫu nhiên hoặc tham số sinh.
+/**
+ * @brief Quản lý tập hợp các ống (Pipe Pair) trong game.
+ * 
+ * Responsibilities:
+ * - Khởi tạo ống mới dựa trên timer.
+ * - Cập nhật vị trí của tất cả ống đang active.
+ * - Dọn dẹp (xóa) những ống đã đi qua khỏi màn hình để giải phóng bộ nhớ.
+ * - Cung cấp danh sách ống để hệ thống khác (Collision, Score, Rendering) duyệt và kiểm tra.
+ */
+class PipeManager {
+public:
+    /**
+     * @brief Khởi tạo PipeManager
+     */
+    PipeManager();
 
-API public dự kiến
-- TODO: khai báo constructor và reset().
-- TODO: khai báo update().
-- TODO: khai báo render().
-- TODO: khai báo spawnPipe() hoặc hàm hỗ trợ tương đương.
-- TODO: khai báo hàm truy cập cho danh sách ống đang hoạt động.
-- TODO: khai báo hàm hỗ trợ dọn ống ra khỏi màn hình.
+    /**
+     * @brief Cập nhật trạng thái các ống và sinh ống mới nếu đến lượt
+     * @param dt Delta time (thời gian trôi qua)
+     */
+    void update(float dt);
 
-Ghi chú cho lần hiện thực sau
-- Giữ chính sách sinh tập trung tại đây.
-- Phối hợp với Score để tránh cộng điểm trùng.
-*/
+    /**
+     * @brief Render tất cả ống đang active
+     * @param target Render target của SFML
+     */
+    void render(sf::RenderTarget& target) const;
 
+    /**
+     * @brief Đặt lại trạng thái (xóa hết ống, reset timer) khi chơi lại
+     */
+    void reset();
 
+    /**
+     * @brief Lấy danh sách ống hiện tại (đọc/ghi để kiểm tra va chạm, cộng điểm)
+     * @return Reference tới vector các Pipe
+     */
+    std::vector<Pipe>& getPipes();
 
+private:
+    /**
+     * @brief Sinh một cặp ống mới tại cạnh phải màn hình
+     */
+    void spawnPipe();
 
+    std::vector<Pipe> pipes;
+
+    float spawnTimer;
+    float spawnInterval; // Bao lâu thì sinh 1 ống mới (giây)
+    float pipeSpeed;
+    float pipeGap;       // Kích thước khe hở
+};

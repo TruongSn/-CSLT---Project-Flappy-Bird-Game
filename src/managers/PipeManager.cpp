@@ -1,29 +1,61 @@
-﻿/*
-Mục đích
-- File hiện thực dự kiến cho bộ quản lý PipeManager.
+#include "PipeManager.hpp"
+#include <cstdlib> // Cho rand() ngẫu nhiên
 
-Trách nhiệm dự kiến
-- Xử lý sinh chướng ngại vật theo thời gian.
-- Cập nhật toàn bộ ống đang hoạt động theo đúng thứ tự.
-- Xóa các ống rời khỏi vùng nhìn thấy.
-- Cung cấp giao diện tập dữ liệu rõ ràng cho các hệ thống khác.
+PipeManager::PipeManager() 
+    : spawnTimer(0.0f), spawnInterval(2.0f), pipeSpeed(150.0f), pipeGap(120.0f) 
+{
+    // Khởi tạo ban đầu
+}
 
-Các vùng logic dự kiến
-- Tích lũy bộ đếm sinh.
-- Chọn ngẫu nhiên vị trí khe hở trong giới hạn an toàn.
-- Cập nhật và dọn dẹp tập ống.
-- Hành vi đặt lại khi chơi lại.
+void PipeManager::update(float dt) {
+    // 1. Cập nhật đếm ngược spawn
+    spawnTimer += dt;
+    if (spawnTimer >= spawnInterval) {
+        spawnPipe();
+        spawnTimer = 0.0f;
+    }
 
-Phụ thuộc có thể dùng
-- Các tiện ích container của STL.
-- Công cụ ngẫu nhiên trong standard library.
-- src/entities/Pipe.hpp
-- src/config/GameplayConfig.hpp hoặc cấu hình nội bộ của bộ quản lý.
+    // 2. Cập nhật từng ống
+    for (auto& pipe : pipes) {
+        pipe.update(dt);
+    }
 
-Ghi chú cho lần hiện thực sau
-- Giữ quyền quản lý bộ nhớ đơn giản và tường minh.
-- Tránh tác động phụ ẩn khi hệ thống khác duyệt ống đang hoạt động.
-*/
+    // 3. Xóa các ống ra khỏi màn hình
+    // Sử dụng std::erase_if (C++20) hoặc thủ công (C++11/14/17 remove_if)
+    auto it = pipes.begin();
+    while (it != pipes.end()) {
+        if (it->isOffscreen()) {
+            it = pipes.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}
 
+void PipeManager::render(sf::RenderTarget& target) const {
+    for (const auto& pipe : pipes) {
+        pipe.render(target);
+    }
+}
 
+void PipeManager::reset() {
+    pipes.clear();
+    spawnTimer = 0.0f;
+}
 
+std::vector<Pipe>& PipeManager::getPipes() {
+    return pipes;
+}
+
+void PipeManager::spawnPipe() {
+    // Kích thước chuẩn màn hình tạo hằng số tạm (sau lấy từ config)
+    float windowWidth = 800.0f; 
+    
+    // Khoảng cho khe hở ngẫu nhiên (chỉ sinh khe trong vùng an toàn)
+    // Ví dụ tâm khe hở dao động từ 150 đến 450
+    float minY = 150.0f;
+    float maxY = 450.0f;
+    float randomY = minY + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (maxY - minY)));
+
+    pipes.emplace_back(windowWidth, randomY, pipeGap, pipeSpeed);
+}
