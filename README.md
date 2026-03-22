@@ -1,80 +1,279 @@
-# Flappy Bird Game
+﻿# Dự án Flappy Bird 2D Desktop Offline
 
-This is a classic Flappy Bird game implemented in Python using the Pygame library.
+Đây là bộ khung ban đầu cho game Flappy Bird chạy trên desktop bằng C++17 và SFML. Repository hiện mới ở giai đoạn dựng khung: các file mã nguồn chỉ chứa comment định hướng, còn phần hiện thực sẽ được bổ sung dần theo từng mô-đun.
 
-## Features
+## Mục tiêu dự án
 
-- **Classic Gameplay**: Tap to flap the bird and navigate through pipes.
-- **Scoring System**: Earn points for each pipe passed.
-- **Game States**: Start screen, playing mode, and game over screen.
-- **Responsive Design**: Adapts to different screen sizes.
+Xây dựng một bản MVP Flappy Bird offline trên desktop với luồng cốt lõi sau:
 
-## Tech Stack
+- Màn hình bắt đầu
+- Chim flap và chịu gravity
+- Ống sinh ra và di chuyển
+- Va chạm với ống và mặt đất
+- Điểm số cập nhật theo thời gian thực
+- Trạng thái thua cuộc
+- Luồng chơi lại
 
-<div align="center">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  <img src="https://img.shields.io/badge/Pygame-F2E67C?style=for-the-badge&logo=pygame&logoColor=black" alt="Pygame" />
-  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
-</div>
+Phần mở rộng sau MVP:
 
-## Prerequisites
+- Tạm dừng và tiếp tục
+- Âm thanh cơ bản
+- Lưu điểm cao nhất cục bộ
+- Tăng độ khó nhẹ
 
-- Python 3.x
-- Pygame library (`pip install pygame`)
+## Trạng thái hiện tại
 
-## Installation
+Repository này đang ở giai đoạn dựng khung.
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd -CSLT---Project-Flappy-Bird-Game
-   ```
+- Cấu trúc thư mục đã được khóa.
+- Các file mã nguồn và tệp tiêu đề mới chỉ là khung kèm ghi chú hiện thực.
+- Chưa có logic trò chơi thật.
 
-2. Install dependencies:
-   ```bash
-   pip install pygame
-   ```
+## Stack công nghệ
 
-## Usage
+- Ngôn ngữ: C++17
+- Thư viện: SFML
+- Standard Library: chỉ dùng STL
+- Lưu trữ: file cục bộ cho điểm cao nhất
+- Loại ứng dụng: game desktop 2D offline
+- Tài liệu: Markdown
 
-Run the game from the terminal:
+Không nằm trong phạm vi:
 
-```bash
-python main.py
+- Database
+- API ngoài
+- Web backend
+- Engine hoặc framework khác như Unity, Unreal, Godot, SDL hoặc raylib
+
+## Cấu trúc thư mục dự kiến
+
+```text
+project-root/
+|-- main.cpp
+|-- src/
+|   |-- core/
+|   |   |-- Game.hpp
+|   |   |-- Game.cpp
+|   |   `-- GameState.hpp
+|   |-- entities/
+|   |   |-- Bird.hpp
+|   |   |-- Bird.cpp
+|   |   |-- Pipe.hpp
+|   |   `-- Pipe.cpp
+|   |-- managers/
+|   |   |-- PipeManager.hpp
+|   |   `-- PipeManager.cpp
+|   |-- systems/
+|   |   |-- Collision.hpp
+|   |   |-- Collision.cpp
+|   |   |-- Score.hpp
+|   |   |-- Score.cpp
+|   |   |-- HighScore.hpp
+|   |   `-- HighScore.cpp
+|   |-- ui/
+|   |   |-- UI.hpp
+|   |   `-- UI.cpp
+|   `-- config/
+|       `-- GameplayConfig.hpp
+|-- assets/
+|   |-- images/
+|   |-- audio/
+|   `-- fonts/
+|-- docs/
+|   `-- Program_Overview.md
+|-- tests/
+|   `-- manual/
+|       `-- mechanics/
+|           `-- Collision_Checklist.md
+`-- README.md
 ```
 
-## Controls
+## Mô tả ngắn các mô-đun
 
-- **Spacebar** or **Up Arrow**: Flap the bird
-- **Escape**: Exit the game
+- `main.cpp`: điểm vào của ứng dụng; sau này tạo đối tượng `Game` và khởi động vòng đời chương trình.
+- `src/core/Game.*`: điều phối input, cập nhật, vẽ và chuyển trạng thái.
+- `src/core/GameState.hpp`: định nghĩa trạng thái dùng chung như Start, Playing, Paused và GameOver.
+- `src/entities/Bird.*`: dữ liệu chim, chuyển động, hiển thị và đặt lại.
+- `src/entities/Pipe.*`: biểu diễn từng chướng ngại vật và trạng thái passed.
+- `src/managers/PipeManager.*`: sinh, cập nhật, dọn dẹp và cung cấp danh sách ống đang hoạt động.
+- `src/systems/Collision.*`: kiểm tra va chạm giữa chim, ống, mặt đất và trần.
+- `src/systems/Score.*`: quản lý điểm của lượt chơi hiện tại.
+- `src/systems/HighScore.*`: lưu điểm cao nhất cục bộ.
+- `src/ui/UI.*`: màn hình bắt đầu, HUD, overlay tạm dừng và thua cuộc.
+- `src/config/GameplayConfig.hpp`: nơi gom các giá trị tinh chỉnh và cấu hình trò chơi.
+- `docs/`: ghi chú thiết kế và định hướng hiện thực ở cấp dự án.
+- `tests/manual/`: checklist kiểm thử tay và ghi chú QA.
 
-## Project Structure
+## Hướng dẫn build và chạy dự kiến
 
-```
--CSLT---Project-Flappy-Bird-Game/
-├── main.py             # Main game entry point
-├── bird.py             # Bird class and animations
-├── pipe.py             # Pipe generation and movement
-├── settings.py         # Game settings and constants
-├── assets/             # Game assets (images, sounds)
-│   ├── bird.png        # Bird sprite
-│   ├── pipe.png        # Pipe sprite
-│   ├── background.png  # Background image
-│   ├── score.wav       # Score sound
-│   └── die.wav         # Death sound
-└── README.md           # Project documentation
-```
+Các bước dưới đây là quy trình dự kiến, không phải khẳng định rằng game đã chạy được ngay ở trạng thái hiện tại.
 
-## Assets
+### Yêu cầu trước khi build
 
-The game uses the following assets (located in the `assets/` directory):
+- Compiler hỗ trợ C++17
+- SFML đã được cài đặt và liên kết đúng
+- Một cấu hình build cục bộ do nhóm chọn, ví dụ CMake hoặc project trong IDE
 
-- `bird.png`: Bird sprite
-- `pipe.png`: Pipe sprite
-- `background.png`: Background image
-- `score.wav`: Sound effect for scoring
-- `die.wav`: Sound effect for death
+### Luồng build dự kiến
 
-## License
+1. Cấu hình project để biên dịch với C++17.
+2. Liên kết các mô-đun graphics, window và audio của SFML.
+3. Đảm bảo executable có thể truy cập tài nguyên trong thư mục `assets/`.
+4. Build target ứng dụng.
+5. Chạy executable từ project root hoặc từ cấu hình giữ đúng đường dẫn tài nguyên.
 
-This project is licensed under the terms of the MIT license.
+### Luồng chạy dự kiến
+
+- Khởi chạy executable desktop.
+- Bắt đầu ở màn hình tiêu đề hoặc màn hình bắt đầu.
+- Vào phần chơi sau khi thao tác bắt đầu được hiện thực.
+- Chuyển qua các trạng thái Playing, GameOver và Restart sau khi các mô-đun trò chơi hoàn thiện.
+
+## Quy trình làm việc nhóm
+
+Luồng cộng tác được khuyến nghị:
+
+1. Khóa phạm vi phụ trách file trước mỗi giai đoạn làm việc.
+2. Mỗi người làm trên branch cá nhân.
+3. Chỉ sửa trong đúng mô-đun được giao.
+4. Build hoặc kiểm tra đúng phạm vi liên quan trước khi bàn giao.
+5. Đính kèm artifact ngắn gồm file đã đổi, test đã chạy và rủi ro còn lại.
+6. Chỉ merge khi ranh giới phần việc và handoff đã rõ.
+
+Gợi ý tên branch:
+
+- `huy/tuan-01-bo-khung`
+- `kiet/tuan-03-va-cham`
+- `son/tuan-04-diem-cao-nhat`
+
+## Quy ước phạm vi phụ trách mô-đun
+
+### Thành viên 1: Le Doan Nhat Huy
+
+Owner chính:
+
+- Kiến trúc tổng
+- Vòng lặp game
+- Trạng thái game
+- UI
+- Score
+- README và docs
+- Đóng gói demo
+
+Được sửa:
+
+- `main.cpp`
+- `src/core/*`
+- `src/ui/*`
+- `src/systems/Score*`
+- `README.md`
+- `docs/*`
+
+Không sửa:
+
+- `src/entities/Bird*`
+- `src/systems/Collision*`
+- `src/entities/Pipe*`
+- `src/managers/PipeManager*`
+- `src/systems/HighScore*`
+- `assets/audio/*`
+- `assets/images/*`
+
+### Thành viên 2: Tran Vu Anh Kiet
+
+Owner chính:
+
+- Bird
+- Physics
+- Input feel
+- Collision
+- Cấu hình gameplay
+
+Được sửa:
+
+- `src/entities/Bird*`
+- `src/systems/Collision*`
+- `src/config/GameplayConfig*`
+- `tests/manual/mechanics/*`
+
+Không sửa:
+
+- `main.cpp`
+- `src/core/*`
+- `src/ui/*`
+- `src/systems/Score*`
+- `src/managers/PipeManager*`
+- `src/systems/HighScore*`
+- `assets/*`
+
+### Thành viên 3: Nguyen Truong Son
+
+Owner chính:
+
+- Pipe
+- Pipe manager
+- Asset pipeline
+- Audio
+- Điểm cao nhất cục bộ
+- Lưu trữ
+
+Được sửa:
+
+- `src/entities/Pipe*`
+- `src/managers/PipeManager*`
+- `src/systems/HighScore*`
+- `assets/*`
+
+Không sửa:
+
+- `main.cpp`
+- `src/core/*`
+- `src/ui/*`
+- `src/entities/Bird*`
+- `src/systems/Collision*`
+- `src/systems/Score*`
+
+## Checklist phần còn phải hiện thực
+
+Phần MVP lõi còn lại:
+
+- Định nghĩa `GameState`
+- Khai báo lớp `Game` và vòng lặp khi chạy
+- Hợp đồng Bird và vật lý
+- Hợp đồng Pipe và PipeManager
+- Phát hiện va chạm
+- Luật tăng điểm
+- Xử lý file điểm cao nhất
+- Chữ giao diện và overlay
+- Chiến lược nạp tài nguyên
+- Ca kiểm thử tay cho luồng trò chơi
+
+Phần hỗ trợ dự án còn lại:
+
+- Chọn và thêm cấu hình build
+- Thêm tài nguyên tạm
+- Định nghĩa chính sách đường dẫn file điểm cao nhất
+- Ghi rõ các bước compiler và SFML setup
+- Bổ sung ảnh chụp hoặc ghi chú demo sau khi có bản chơi được
+
+## Quy tắc khóa cho repository này
+
+- Giữ C++17 + SFML + STL là stack duy nhất.
+- Không thêm database.
+- Không thêm API ngoài.
+- Không đưa engine hoặc framework khác vào dự án.
+- Không thay đổi ranh giới mô-đun nếu chưa có đồng thuận của nhóm.
+- Giữ file mã nguồn rõ trách nhiệm và dễ đọc.
+
+## Tài liệu liên quan
+
+- Tổng quan chương trình: `docs/Program_Overview.md`
+- Tệp kiểm thử tay tạm: `tests/manual/mechanics/Collision_Checklist.md`
+
+## Bước tiếp theo
+
+Dùng bộ khung này làm điểm xuất phát đã được khóa, sau đó hiện thực dần từng mô-đun theo phạm vi phụ trách và quy tắc bàn giao của nhóm.
+
+
+
+
