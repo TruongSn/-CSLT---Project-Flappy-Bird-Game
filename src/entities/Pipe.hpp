@@ -1,28 +1,65 @@
-﻿/*
-Mục đích
-- Nơi dự kiến khai báo một chướng ngại vật ống hoặc mô hình cặp ống.
+#pragma once
 
-Trách nhiệm dự kiến
-- Biểu diễn hình học chướng ngại vật, dữ liệu chuyển động và trạng thái đã vượt qua.
-- Cung cấp dữ liệu hiển thị và bounds cho kiểm tra va chạm.
+#include <SFML/Graphics.hpp>
 
-Dữ liệu chính dự kiến có ở đây
-- Vị trí của ống.
-- Vị trí khe hở và kích thước khe.
-- Tốc độ di chuyển hoặc tham chiếu tới cấu hình tốc độ dùng chung.
-- Cờ passed để kiểm soát tính điểm.
+/**
+ * @brief Đại diện cho một cặp ống (Pipe Pair) gồm ống trên và ống dưới.
+ * 
+ * Responsibilities:
+ * - Lưu giữ vị trí, kích thước khe hở (gap), và cờ báo hiệu đã đi qua hay chưa.
+ * - Cung cấp getBoundsTop() và getBoundsBottom() dùng cho việc phát hiện va chạm.
+ * - Render cả 2 phần ống ra màn hình.
+ */
+class Pipe {
+public:
+    /**
+     * @brief Khởi tạo một cặp ống
+     * @param x Vị trí X ban đầu của cặp ống
+     * @param gapY Vị trí Y (tâm của khe hở)
+     * @param gapSize Chiều cao khe hở để con chim bay qua
+     * @param speed Tốc độ di chuyển của ống (pixels/second)
+     */
+    Pipe(float x, float gapY, float gapSize, float speed);
 
-API public dự kiến
-- TODO: khai báo constructor hoặc thiết lập lúc sinh ra.
-- TODO: khai báo update().
-- TODO: khai báo render().
-- TODO: khai báo isOffscreen().
-- TODO: khai báo hàm truy cập cho bounds va chạm.
-- TODO: khai báo hàm truy cập cho trạng thái passed.
+    /**
+     * @brief Cập nhật trạng thái ống (vị trí X)
+     * @param dt Delta time (thời gian trôi qua giữa 2 frame)
+     */
+    void update(float dt);
 
-Ghi chú cho lần hiện thực sau
-- Giữ mô-đun này tập trung vào một đơn vị chướng ngại vật.
-- Gom chính sách sinh và vòng đời vào PipeManager, không đặt ở đây.
-*/
+    /**
+     * @brief Vẽ ống lên màn hình
+     * @param target Render target (window) của SFML
+     */
+    void render(sf::RenderTarget& target) const;
 
+    /**
+     * @brief Kiểm tra ống đã ra khỏi mép trái màn hình chưa
+     * @return true nếu khoảng bounding box không còn nằm trong màn hình hiển thị
+     */
+    bool isOffscreen() const;
 
+    /**
+     * @brief Cập nhật cờ tính điểm khi chim vượt qua
+     * @param birdX Hoành độ X hiện tại của con chim
+     * @return true nếu bắt đầu đi ngang qua và cờ được bật (ghi nhận tính điểm 1 lần duy nhất)
+     */
+    bool checkPassed(float birdX);
+
+    // Getters cho logic va chạm (SFML Rect)
+    sf::FloatRect getBoundsTop() const;
+    sf::FloatRect getBoundsBottom() const;
+
+    // Getters
+    bool isPassed() const;
+
+private:
+    sf::Vector2f position; // (X, gapY)
+    float gapSize;
+    float speed;
+    bool passedFlag; // Cờ báo đã tính điểm hay chưa
+
+    // Placeholder: Kích thước thật của visual ống để xây dựng Rect
+    float pipeWidth;
+    float pipeHeight;
+};

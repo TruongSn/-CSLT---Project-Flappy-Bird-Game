@@ -1,23 +1,61 @@
-﻿/*
-Mục đích
-- File hiện thực dự kiến cho entity Pipe.
+#include "Pipe.hpp"
 
-Trách nhiệm dự kiến
-- Di chuyển các ống qua màn hình.
-- Chuẩn bị bounds của ống trên và ống dưới.
-- Hỗ trợ hành vi vẽ và thay đổi trạng thái passed.
+Pipe::Pipe(float x, float gapY, float gapSize, float speed)
+    : position(x, gapY), gapSize(gapSize), speed(speed), passedFlag(false),
+      pipeWidth(52.f), pipeHeight(320.f) // Các kích thước hardcode tạm, sẽ đổi khi tích hợp assets
+{
+    // Khởi tạo các Sprite hoặc shape biểu diễn sau
+}
 
-Các vùng logic dự kiến
-- Khởi tạo lúc sinh ra.
-- Di chuyển theo từng frame.
-- Phát hiện khi ra khỏi màn hình.
-- Cách vẽ cho phần tạm và asset thật.
+void Pipe::update(float dt) {
+    // Di chuyển ống sang trái
+    position.x -= speed * dt;
+}
 
-Phụ thuộc có thể dùng
-- Các kiểu đồ họa của SFML.
-- src/config/GameplayConfig.hpp hoặc thiết lập do manager cung cấp.
+void Pipe::render(sf::RenderTarget& target) const {
+    // TODO: Vẽ ống trên (bottom edge tại position.y - gapSize/2)
+    // TODO: Vẽ ống dưới (top edge tại position.y + gapSize/2)
+}
 
-Ghi chú cho lần hiện thực sau
-- Nếu có thể, giữ quyết định sinh ngẫu nhiên ở ngoài file này.
-- Tránh đặt logic điểm ở đây, ngoại trừ việc lưu trạng thái cặp ống đã được vượt qua.
-*/
+bool Pipe::isOffscreen() const {
+    // Nếu toàn bộ ống đã đi qua mép trái màn hình (x < -pipeWidth)
+    return (position.x + pipeWidth < 0);
+}
+
+bool Pipe::checkPassed(float birdX) {
+    // Nếu bird vượt qua tâm ngang của ống và chưa đánh dấu
+    if (!passedFlag && birdX > position.x + (pipeWidth / 2.0f)) {
+        passedFlag = true;
+        return true; // Trả về true để ScoreSystem cộng điểm
+    }
+    return false;
+}
+
+sf::FloatRect Pipe::getBoundsTop() const {
+    // Bounding box cho ống phía trên
+    // X = position.x
+    // Bottom Y = position.y - gapSize / 2
+    // Top Y = (position.y - gapSize / 2) - pipeHeight
+    return sf::FloatRect(
+        position.x, 
+        position.y - (gapSize / 2.0f) - pipeHeight, 
+        pipeWidth, 
+        pipeHeight
+    );
+}
+
+sf::FloatRect Pipe::getBoundsBottom() const {
+    // Bounding box cho ống phía dưới
+    // X = position.x
+    // Top Y = position.y + gapSize / 2
+    return sf::FloatRect(
+        position.x, 
+        position.y + (gapSize / 2.0f), 
+        pipeWidth, 
+        pipeHeight
+    );
+}
+
+bool Pipe::isPassed() const {
+    return passedFlag;
+}
