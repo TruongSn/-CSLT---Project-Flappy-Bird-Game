@@ -25,4 +25,27 @@ Ghi chú cho lần hiện thực sau
 - Phần chỉnh vật lý của Bird nên dựa vào GameplayConfig.
 - Giữ cảm giác điều khiển tách khỏi điều phối trạng thái game.
 */
+#pragma once
+
+#include <SFML/Graphics.hpp>
+
+class Bird {
+public:
+    Bird();
+
+    void reset();
+    void flap();
+    void update(float dt);
+    void render(sf::RenderTarget& target) const;
+
+    sf::FloatRect getBounds() const;
+    sf::Vector2f getPosition() const;
+    float getVerticalVelocity() const;
+
+private:
+    sf::RectangleShape shape;
+    sf::Vector2f startPosition;
+    float verticalVelocity;
+    float rotationDegrees;
+};
 
