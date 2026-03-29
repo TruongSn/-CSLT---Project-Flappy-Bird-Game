@@ -69,7 +69,7 @@ Tài liệu này dùng để:
 | --- | --- | --- | --- | --- | --- |
 | Lê Đoàn Nhật Huy | Tích hợp `Bird` vào game loop tổng, hoàn thành chuyển state từ bắt đầu sang đang chơi | Bird được gọi update/render trong luồng chơi | Chưa cập nhật | 0% | |
 | Trần Vũ Anh Kiệt | Hiện thực `Bird`: flap, gravity, velocity, reset, render placeholder | Bird bay lên khi nhấn phím/click, rơi tự nhiên, reset được | Chưa cập nhật | 0% | |
-| Nguyễn Trường Sơn | Chuẩn bị tài nguyên tạm cho bird, background, ground, pipe, font | Bộ asset tối thiểu để chạy MVP | Chưa cập nhật | 0% | |
+| Nguyễn Trường Sơn | Chuẩn bị tài nguyên tạm cho bird, background, ground, pipe, font | Bộ asset tối thiểu để chạy MVP | Hoàn thành | 100% | Đã tạo các ảnh placeholder (bird, pipe, bg, base) và copy font chữ cơ bản |
 
 ## Tuần 3 - Ống cản và va chạm
 
@@ -152,7 +152,7 @@ Tài liệu này dùng để:
 | Tuần | Công việc chính | Trạng thái | % hoàn thành | Minh chứng | Ghi chú |
 | --- | --- | --- | --- | --- | --- |
 | 1 | API `Pipe`, `PipeManager`, quy ước tài nguyên | Hoàn thành | 100% | File `Pipe.hpp`, `Pipe.cpp`, `PipeManager.hpp`, `PipeManager.cpp`, và `Resource_Naming_Conventions.md` | |
-| 2 | Tài nguyên tạm cho MVP | Chưa cập nhật | 0% | | |
+| 2 | Tài nguyên tạm cho MVP | Hoàn thành | 100% | Các file placeholder trong `assets/images/` và `assets/fonts/` | Đã dùng script để render asset tạm và mượn font Arial |
 | 3 | Hiện thực `Pipe` và `PipeManager` | Chưa cập nhật | 0% | | |
 | 4 | `HighScore` và cờ `passed` cho pipe pair | Chưa cập nhật | 0% | | |
 | 5 | Audio và thay asset demo | Chưa cập nhật | 0% | | |
