@@ -59,3 +59,7 @@ void PipeManager::spawnPipe() {
 
     pipes.emplace_back(windowWidth, randomY, pipeGap, pipeSpeed);
 }
+
+const std::vector<Pipe>& PipeManager::getPipes() const {
+    return pipes;
+}
