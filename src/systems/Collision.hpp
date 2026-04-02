@@ -22,4 +22,34 @@ Ghi chú cho lần hiện thực sau
 - Nếu có thể, giữ hệ thống này ở dạng không lưu trạng thái.
 - Hệ thống này nên báo va chạm, không quyết định hành vi UI trực tiếp.
 */
+#pragma once
 
+#include <SFML/Graphics.hpp>
+
+class Bird;
+class Pipe;
+class PipeManager;
+
+enum class CollisionType {
+    None,
+    Pipe,
+    Ground,
+    Ceiling
+};
+
+struct CollisionResult {
+    bool collided = false;
+    CollisionType type = CollisionType::None;
+};
+
+class Collision {
+public:
+    static bool checkBirdPipe(const Bird& bird, const Pipe& pipe);
+    static bool checkBirdGround(const Bird& bird, float groundY);
+    static bool checkBirdCeiling(const Bird& bird);
+    static CollisionResult checkAll(
+        const Bird& bird,
+        const PipeManager& pipeManager,
+        float groundY
+    );
+};

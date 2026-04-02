@@ -42,6 +42,7 @@ public:
      * @return Reference tới vector các Pipe
      */
     std::vector<Pipe>& getPipes();
+    const std::vector<Pipe>& getPipes() const;
 
 private:
     /**
