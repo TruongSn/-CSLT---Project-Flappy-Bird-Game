@@ -191,5 +191,11 @@ Có thể làm nếu còn thời gian:
 
 ## Ràng buộc của bộ khung hiện tại
 
-Ở giai đoạn này, các file mã nguồn cố ý chỉ là khung mô tả tạm. Chúng mô tả trách nhiệm hiện thực trong tương lai và không chứa code trò chơi thật.
+Sau mốc Tuần 1, một phần scaffold đã được hiện thực ở phạm vi core:
+
+- `main.cpp` có thể khởi chạy ứng dụng.
+- `GameState`, `Game`, `UI`, `Score` đã có code tối thiểu để chạy flow trạng thái.
+- `CMakeLists.txt` đã cho phép build bản scaffold.
+
+Các mô-đun Bird, Pipe, PipeManager, Collision và HighScore vẫn là contract khung và sẽ hoàn thiện theo timeline tuần tiếp theo.
 

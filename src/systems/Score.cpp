@@ -1,22 +1,19 @@
-﻿/*
-Mục đích
-- File hiện thực dự kiến cho xử lý điểm của lượt chơi hiện tại.
+﻿#include "Score.hpp"
 
-Trách nhiệm dự kiến
-- Chỉ cập nhật điểm khi chim vượt qua chướng ngại vật hợp lệ.
-- Đặt lại điểm khi bắt đầu lượt chơi mới.
-- Hỗ trợ lấy dữ liệu cho UI và so sánh điểm cao nhất.
+Score::Score() : currentScore_(0) {}
 
-Các vùng logic dự kiến
-- Luật tăng điểm.
-- Luồng đặt lại.
-- Helper tùy chọn để đánh giá sự kiện vượt ống từ tập ống đang hoạt động.
+void Score::reset() {
+	currentScore_ = 0;
+}
 
-Phụ thuộc có thể dùng
-- src/managers/PipeManager.hpp
-- src/entities/Bird.hpp
+void Score::addPoint(int amount) {
+	if (amount <= 0) {
+		return;
+	}
 
-Ghi chú cho lần hiện thực sau
-- Giữ trạng thái điểm độc lập với phần vẽ.
-- Tránh lưu file ở đây; lưu trữ cục bộ thuộc về HighScore.
-*/
+	currentScore_ += amount;
+}
+
+int Score::getCurrentScore() const {
+	return currentScore_;
+}

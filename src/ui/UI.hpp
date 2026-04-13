@@ -1,26 +1,24 @@
-﻿/*
-Mục đích
-- Nơi dự kiến khai báo UI và phần vẽ overlay.
+﻿#pragma once
 
-Trách nhiệm dự kiến
-- Vẽ màn hình bắt đầu.
-- Vẽ các phần tử HUD như điểm số.
-- Vẽ overlay tạm dừng và thua cuộc.
-- Hiển thị điểm cao nhất và hướng dẫn chơi lại khi cần.
+#include <SFML/Graphics.hpp>
 
-Dữ liệu chính dự kiến có ở đây
-- Tham chiếu font hoặc đối tượng text.
-- Hàm hỗ trợ bố cục hoặc chuỗi UI được lưu sẵn.
+#include <string>
 
-API public dự kiến
-- TODO: khai báo hàm khởi tạo hoặc thiết lập tài nguyên.
-- TODO: khai báo renderStartScreen().
-- TODO: khai báo renderHUD().
-- TODO: khai báo renderPauseOverlay().
-- TODO: khai báo renderGameOver().
+#include "../core/GameState.hpp"
 
-Ghi chú cho lần hiện thực sau
-- Giữ phần trình bày UI tách khỏi luật chơi lõi.
-- Phụ thuộc vào GameState và giá trị điểm được truyền từ core.
-*/
+class UI {
+public:
+	bool initialize(const std::string& fontPath);
+	void render(sf::RenderWindow& window, GameState state, int currentScore) const;
+
+private:
+	void drawCenteredText(sf::RenderWindow& window,
+						  const std::string& message,
+						  unsigned int characterSize,
+						  float y,
+						  sf::Color color) const;
+
+	sf::Font font_;
+	bool hasFont_ = false;
+};
 

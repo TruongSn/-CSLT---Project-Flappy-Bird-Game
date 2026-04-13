@@ -1,6 +1,6 @@
 ﻿# Dự án Flappy Bird 2D Desktop Offline
 
-Đây là bộ khung ban đầu cho game Flappy Bird chạy trên desktop bằng C++17 và SFML. Repository hiện mới ở giai đoạn dựng khung: các file mã nguồn chỉ chứa comment định hướng, còn phần hiện thực sẽ được bổ sung dần theo từng mô-đun.
+Đây là dự án game Flappy Bird chạy trên desktop bằng C++17 và SFML. Repository đã hoàn thành mốc Tuần 1 cho phần core scaffold: mở cửa sổ SFML, dựng game loop cơ bản, khai báo state machine, dựng UI text theo trạng thái và thêm cấu hình build bằng CMake.
 
 ## Mục tiêu dự án
 
@@ -23,11 +23,13 @@ Phần mở rộng sau MVP:
 
 ## Trạng thái hiện tại
 
-Repository này đang ở giai đoạn dựng khung.
+Repository hiện ở trạng thái sau khi chốt milestone Tuần 1.
 
-- Cấu trúc thư mục đã được khóa.
-- Các file mã nguồn và tệp tiêu đề mới chỉ là khung kèm ghi chú hiện thực.
-- Chưa có logic trò chơi thật.
+- Đã có entry point chạy được từ `main.cpp`.
+- Đã có `GameState` và game loop trong `src/core/Game.*`.
+- Đã có scaffold UI trong `src/ui/UI.*` và scaffold điểm trong `src/systems/Score.*`.
+- Đã có cấu hình build CMake trong `CMakeLists.txt`.
+- Các mô-đun Bird, Pipe, Collision, HighScore vẫn là contract chờ triển khai theo timeline tuần tiếp theo.
 
 ## Stack công nghệ
 
@@ -104,30 +106,44 @@ project-root/
 - `docs/`: ghi chú thiết kế và định hướng hiện thực ở cấp dự án.
 - `tests/manual/`: checklist kiểm thử tay và ghi chú QA.
 
-## Hướng dẫn build và chạy dự kiến
+## Hướng dẫn build và chạy (Tuần 1)
 
-Các bước dưới đây là quy trình dự kiến, không phải khẳng định rằng game đã chạy được ngay ở trạng thái hiện tại.
+Các bước bên dưới dùng để chạy bản scaffold hiện tại.
 
 ### Yêu cầu trước khi build
 
 - Compiler hỗ trợ C++17
-- SFML đã được cài đặt và liên kết đúng
-- Một cấu hình build cục bộ do nhóm chọn, ví dụ CMake hoặc project trong IDE
+- CMake 3.16+
+- SFML đã được cài và để CMake tìm thấy (qua system path hoặc cấu hình `SFML_DIR`)
 
-### Luồng build dự kiến
+### Build với CMake
 
-1. Cấu hình project để biên dịch với C++17.
-2. Liên kết các mô-đun graphics, window và audio của SFML.
-3. Đảm bảo executable có thể truy cập tài nguyên trong thư mục `assets/`.
-4. Build target ứng dụng.
-5. Chạy executable từ project root hoặc từ cấu hình giữ đúng đường dẫn tài nguyên.
+Từ thư mục project root, chạy:
 
-### Luồng chạy dự kiến
+```bash
+cmake -S . -B build
+cmake --build build --config Release
+```
 
-- Khởi chạy executable desktop.
-- Bắt đầu ở màn hình tiêu đề hoặc màn hình bắt đầu.
-- Vào phần chơi sau khi thao tác bắt đầu được hiện thực.
-- Chuyển qua các trạng thái Playing, GameOver và Restart sau khi các mô-đun trò chơi hoàn thiện.
+### Chạy chương trình
+
+Với generator nhiều cấu hình (Visual Studio):
+
+```bash
+./build/Release/flappy_bird_week1.exe
+```
+
+Với generator một cấu hình (Ninja/MinGW Makefiles):
+
+```bash
+./build/flappy_bird_week1.exe
+```
+
+Điều khiển ở bản Tuần 1:
+
+- `Enter` / `Space` / click chuột: bắt đầu hoặc chơi lại
+- `Esc`: pause hoặc resume
+- `G`: giả lập game over để test flow trạng thái
 
 ## Quy trình làm việc nhóm
 
@@ -237,20 +253,20 @@ Không sửa:
 
 Phần MVP lõi còn lại:
 
-- Định nghĩa `GameState`
-- Khai báo lớp `Game` và vòng lặp khi chạy
+- [x] Định nghĩa `GameState`
+- [x] Khai báo lớp `Game` và vòng lặp khi chạy
 - Hợp đồng Bird và vật lý
 - Hợp đồng Pipe và PipeManager
 - Phát hiện va chạm
 - Luật tăng điểm
 - Xử lý file điểm cao nhất
-- Chữ giao diện và overlay
+- [x] Chữ giao diện và overlay ở mức scaffold
 - Chiến lược nạp tài nguyên
 - Ca kiểm thử tay cho luồng trò chơi
 
 Phần hỗ trợ dự án còn lại:
 
-- Chọn và thêm cấu hình build
+- [x] Chọn và thêm cấu hình build (CMake)
 - Thêm tài nguyên tạm
 - Định nghĩa chính sách đường dẫn file điểm cao nhất
 - Ghi rõ các bước compiler và SFML setup

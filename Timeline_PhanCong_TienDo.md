@@ -59,7 +59,7 @@ Tài liệu này dùng để:
 
 | Thành viên | Nhiệm vụ chính | Đầu ra cần bàn giao | Trạng thái | % hoàn thành | Ghi chú |
 | --- | --- | --- | --- | --- | --- |
-| Lê Đoàn Nhật Huy | Tạo skeleton project, mở cửa sổ SFML rỗng, dựng `GameState`, khóa cấu trúc thư mục, viết README build/run bản đầu | Scaffold repo, cửa sổ rỗng build được, README hướng dẫn cơ bản | Chưa cập nhật | 0% | |
+| Lê Đoàn Nhật Huy | Tạo skeleton project, mở cửa sổ SFML rỗng, dựng `GameState`, khóa cấu trúc thư mục, viết README build/run bản đầu | Scaffold repo, cửa sổ rỗng build được, README hướng dẫn cơ bản | Hoàn thành | 100% | Đã bàn giao `main.cpp`, `src/core/Game*`, `src/ui/UI*`, `src/systems/Score*`, `CMakeLists.txt`, cập nhật README/docs |
 | Trần Vũ Anh Kiệt | Thiết kế API cho `Bird`, mô tả flap, gravity, reset, tạo `GameplayConfig.hpp` bản đầu | Contract cho `Bird`, nhóm thông số vật lý bản đầu | Chưa cập nhật | 0% | |
 | Nguyễn Trường Sơn | Thiết kế API cho `Pipe` và `PipeManager`, dựng asset folder, thống nhất quy ước tên file tài nguyên | Contract cho pipe, asset folder và quy ước đặt tên | Hoàn thành | 100% | Đã thiết kế xong `Pipe` & `PipeManager` class, định nghĩa doc `Resource_Naming_Conventions.md` |
 
@@ -125,7 +125,7 @@ Tài liệu này dùng để:
 
 | Tuần | Công việc chính | Trạng thái | % hoàn thành | Minh chứng | Ghi chú |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Scaffold, cấu trúc thư mục, `GameState`, README bản đầu | Chưa cập nhật | 0% | | |
+| 1 | Scaffold, cấu trúc thư mục, `GameState`, README bản đầu | Hoàn thành | 100% | `main.cpp`, `src/core/Game*`, `src/ui/UI*`, `src/systems/Score*`, `CMakeLists.txt`, `README.md` | Milestone Tuần 1 đã hoàn tất code scaffold, sẵn sàng build khi máy có CMake + SFML |
 | 2 | Tích hợp `Bird` vào game loop | Chưa cập nhật | 0% | | |
 | 3 | Tích hợp `PipeManager` vào gameplay loop | Chưa cập nhật | 0% | | |
 | 4 | `Score`, HUD, `GameOver`, restart | Chưa cập nhật | 0% | | |
