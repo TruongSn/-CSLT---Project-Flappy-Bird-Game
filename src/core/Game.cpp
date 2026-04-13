@@ -16,6 +16,7 @@ Game::Game()
 	  ui_(),
 	  score_(),
 	  bird_(),
+	  pipeManager_(),
 	  groundY_(static_cast<float>(GameplayConfig::WindowHeight) - GameplayConfig::GroundHeight) {
 	window_.setFramerateLimit(kTargetFps);
 
@@ -87,10 +88,6 @@ void Game::processInput() {
 			continue;
 		}
 
-		if (key == sf::Keyboard::G && currentState_ == GameState::Playing) {
-			setState(GameState::GameOver);
-			continue;
-		}
 	}
 }
 
@@ -99,16 +96,41 @@ void Game::update(float deltaTime) {
 		return;
 	}
 
+	// Stage 1: Bird update
 	bird_.update(deltaTime);
 
+	// Stage 2: Pipes update
+	pipeManager_.update(deltaTime);
+
 	const sf::FloatRect birdBounds = bird_.getBounds();
-	if (birdBounds.top <= 0.0f || (birdBounds.top + birdBounds.height) >= groundY_) {
+
+	// Stage 3: Collision checks
+	bool hasPipeCollision = false;
+	auto& pipes = pipeManager_.getPipes();
+	for (const auto& pipe : pipes) {
+		if (birdBounds.intersects(pipe.getBoundsTop()) || birdBounds.intersects(pipe.getBoundsBottom())) {
+			hasPipeCollision = true;
+			break;
+		}
+	}
+
+	if (hasPipeCollision || birdBounds.top <= 0.0f || (birdBounds.top + birdBounds.height) >= groundY_) {
 		setState(GameState::GameOver);
+		return;
+	}
+
+	// Stage 4: Score checks
+	const float birdX = bird_.getPosition().x;
+	for (auto& pipe : pipes) {
+		if (pipe.checkPassed(birdX)) {
+			score_.addPoint(GameplayConfig::ScorePerPipePair);
+		}
 	}
 }
 
 void Game::render() {
 	window_.clear(sf::Color(113, 197, 236));
+	pipeManager_.render(window_);
 
 	sf::RectangleShape ground(
 		sf::Vector2f(static_cast<float>(window_.getSize().x), GameplayConfig::GroundHeight));
@@ -124,6 +146,7 @@ void Game::render() {
 void Game::resetGame() {
 	score_.reset();
 	bird_.reset();
+	pipeManager_.reset();
 }
 
 void Game::setState(GameState nextState) {

@@ -1,6 +1,6 @@
 ﻿# Dự án Flappy Bird 2D Desktop Offline
 
-Đây là dự án game Flappy Bird chạy trên desktop bằng C++17 và SFML. Repository đã hoàn thành mốc Tuần 2 cho phần core + bird integration: game loop cơ bản, state machine, điều khiển flap, cập nhật trọng lực và render bird placeholder.
+Đây là dự án game Flappy Bird chạy trên desktop bằng C++17 và SFML. Repository đã hoàn thành mốc Tuần 3 cho phần core loop integration: tích hợp bird + pipe manager theo thứ tự update gameplay, kiểm tra va chạm cơ bản và cộng điểm khi qua ống.
 
 ## Mục tiêu dự án
 
@@ -23,14 +23,15 @@ Phần mở rộng sau MVP:
 
 ## Trạng thái hiện tại
 
-Repository hiện ở trạng thái sau khi chốt milestone Tuần 2.
+Repository hiện ở trạng thái sau khi chốt milestone Tuần 3.
 
 - Đã có entry point chạy được từ `main.cpp`.
 - Đã có `GameState` và game loop trong `src/core/Game.*`.
 - Đã có scaffold UI trong `src/ui/UI.*` và scaffold điểm trong `src/systems/Score.*`.
 - Đã tích hợp `Bird` vào luồng `Start -> Playing -> GameOver`.
+- Đã tích hợp `PipeManager` vào gameplay loop và stage cộng điểm theo pipe pass.
 - Đã có cấu hình build CMake trong `CMakeLists.txt`.
-- Các mô-đun Pipe, Collision, HighScore vẫn là contract chờ triển khai theo timeline tuần tiếp theo.
+- Module `Collision` và `HighScore` vẫn chờ hoàn thiện theo timeline tuần tiếp theo.
 
 ## Stack công nghệ
 
@@ -107,7 +108,7 @@ project-root/
 - `docs/`: ghi chú thiết kế và định hướng hiện thực ở cấp dự án.
 - `tests/manual/`: checklist kiểm thử tay và ghi chú QA.
 
-## Hướng dẫn build và chạy (Tuần 2)
+## Hướng dẫn build và chạy (Tuần 3)
 
 Các bước bên dưới dùng để chạy bản scaffold hiện tại.
 
@@ -131,21 +132,21 @@ cmake --build build --config Release
 Với generator nhiều cấu hình (Visual Studio):
 
 ```bash
-./build/Release/flappy_bird_week2.exe
+./build/Release/flappy_bird_week3.exe
 ```
 
 Với generator một cấu hình (Ninja/MinGW Makefiles):
 
 ```bash
-./build/flappy_bird_week2.exe
+./build/flappy_bird_week3.exe
 ```
 
-Điều khiển ở bản Tuần 2:
+Điều khiển ở bản Tuần 3:
 
 - `Enter` / `Space` / click chuột: bắt đầu hoặc chơi lại
 - `Space` / click chuột khi đang chơi: flap
 - `Esc`: pause hoặc resume
-- Va chạm trần hoặc mặt đất: game over
+- Va chạm trần, mặt đất hoặc ống: game over
 
 ## Quy trình làm việc nhóm
 

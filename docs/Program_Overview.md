@@ -191,11 +191,13 @@ Có thể làm nếu còn thời gian:
 
 ## Ràng buộc của bộ khung hiện tại
 
-Sau mốc Tuần 1, một phần scaffold đã được hiện thực ở phạm vi core:
+Sau mốc Tuần 3, bộ khung gameplay đã tiến tới trạng thái tích hợp mức cơ bản:
 
 - `main.cpp` có thể khởi chạy ứng dụng.
-- `GameState`, `Game`, `UI`, `Score` đã có code tối thiểu để chạy flow trạng thái.
-- `CMakeLists.txt` đã cho phép build bản scaffold.
+- `GameState`, `Game`, `UI`, `Score` đã chạy được flow trạng thái.
+- `Bird` đã tích hợp input flap, gravity và render placeholder.
+- `PipeManager` đã được nối vào gameplay loop cho update, collision check cơ bản và score pass check.
+- `CMakeLists.txt` đã build được target tuần 3.
 
-Các mô-đun Bird, Pipe, PipeManager, Collision và HighScore vẫn là contract khung và sẽ hoàn thiện theo timeline tuần tiếp theo.
+Module `Collision` và `HighScore` vẫn cần hoàn thiện theo timeline tuần tiếp theo.
 

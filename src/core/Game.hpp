@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../entities/Bird.hpp"
+#include "../managers/PipeManager.hpp"
 #include "../systems/Score.hpp"
 #include "../ui/UI.hpp"
 #include "GameState.hpp"
@@ -24,6 +25,7 @@ private:
 	UI ui_;
 	Score score_;
 	Bird bird_;
+	PipeManager pipeManager_;
 	float groundY_;
 };
 

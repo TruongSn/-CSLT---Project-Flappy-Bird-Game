@@ -75,7 +75,7 @@ Tài liệu này dùng để:
 
 | Thành viên | Nhiệm vụ chính | Đầu ra cần bàn giao | Trạng thái | % hoàn thành | Ghi chú |
 | --- | --- | --- | --- | --- | --- |
-| Lê Đoàn Nhật Huy | Tích hợp `PipeManager` vào gameplay loop theo thứ tự input -> bird -> pipes -> collision -> score -> render | Game loop tổng chạy đúng thứ tự | Chưa cập nhật | 0% | |
+| Lê Đoàn Nhật Huy | Tích hợp `PipeManager` vào gameplay loop theo thứ tự input -> bird -> pipes -> collision -> score -> render | Game loop tổng chạy đúng thứ tự | Hoàn thành | 100% | Đã nối stage update bird, pipes, collision check và score check trong `Game::update` |
 | Trần Vũ Anh Kiệt | Hiện thực `Collision` giữa bird với pipe, ground, ceiling và trả kết quả để game over | Module collision và checklist test tay cho các trường hợp biên | Chưa cập nhật | 0% | |
 | Nguyễn Trường Sơn | Hiện thực `Pipe` và `PipeManager`: spawn theo timer, random gap, move trái, remove offscreen | Ống sinh liên tục, di chuyển ổn định, không phồng bộ nhớ | Chưa cập nhật | 0% | |
 
@@ -127,7 +127,7 @@ Tài liệu này dùng để:
 | --- | --- | --- | --- | --- | --- |
 | 1 | Scaffold, cấu trúc thư mục, `GameState`, README bản đầu | Hoàn thành | 100% | `main.cpp`, `src/core/Game*`, `src/ui/UI*`, `src/systems/Score*`, `CMakeLists.txt`, `README.md` | Milestone Tuần 1 đã hoàn tất code scaffold, sẵn sàng build khi máy có CMake + SFML |
 | 2 | Tích hợp `Bird` vào game loop | Hoàn thành | 100% | `src/core/Game*`, `src/ui/UI.cpp`, `CMakeLists.txt`, `src/entities/Bird.cpp` | Mốc Tuần 2 hoàn tất tích hợp Bird vào gameplay loop |
-| 3 | Tích hợp `PipeManager` vào gameplay loop | Chưa cập nhật | 0% | | |
+| 3 | Tích hợp `PipeManager` vào gameplay loop | Hoàn thành | 100% | `src/core/Game*`, `src/ui/UI.cpp`, `CMakeLists.txt` | Hoàn tất luồng tuần 3 với pipe update, va chạm ống và cộng điểm theo pipe pass |
 | 4 | `Score`, HUD, `GameOver`, restart | Chưa cập nhật | 0% | | |
 | 5 | Polish UI | Chưa cập nhật | 0% | | |
 | 6 | `Paused` và flow state đầy đủ | Chưa cập nhật | 0% | | |
