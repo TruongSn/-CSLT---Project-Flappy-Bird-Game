@@ -9,7 +9,11 @@
 class UI {
 public:
 	bool initialize(const std::string& fontPath);
-	void render(sf::RenderWindow& window, GameState state, int currentScore) const;
+	void render(sf::RenderWindow& window,
+					GameState state,
+					int currentScore,
+					int bestScore,
+					int lastScore) const;
 
 private:
 	void drawCenteredText(sf::RenderWindow& window,

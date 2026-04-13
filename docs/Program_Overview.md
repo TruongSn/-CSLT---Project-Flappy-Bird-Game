@@ -191,13 +191,14 @@ Có thể làm nếu còn thời gian:
 
 ## Ràng buộc của bộ khung hiện tại
 
-Sau mốc Tuần 3, bộ khung gameplay đã tiến tới trạng thái tích hợp mức cơ bản:
+Sau mốc Tuần 4, bộ khung gameplay đã có vòng chơi hoàn chỉnh ở mức MVP core flow:
 
 - `main.cpp` có thể khởi chạy ứng dụng.
 - `GameState`, `Game`, `UI`, `Score` đã chạy được flow trạng thái.
 - `Bird` đã tích hợp input flap, gravity và render placeholder.
 - `PipeManager` đã được nối vào gameplay loop cho update, collision check cơ bản và score pass check.
-- `CMakeLists.txt` đã build được target tuần 3.
+- Flow `Playing -> GameOver -> Restart` đã rõ ràng, có reset sạch trạng thái và HUD score ổn định.
+- `CMakeLists.txt` đã build được target tuần 4.
 
-Module `Collision` và `HighScore` vẫn cần hoàn thiện theo timeline tuần tiếp theo.
+Module `Collision` và `HighScore` riêng vẫn cần đồng bộ hoàn thiện theo timeline tuần tiếp theo.
 

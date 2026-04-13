@@ -17,6 +17,8 @@ Game::Game()
 	  score_(),
 	  bird_(),
 	  pipeManager_(),
+	  bestScore_(0),
+	  lastScore_(0),
 	  groundY_(static_cast<float>(GameplayConfig::WindowHeight) - GameplayConfig::GroundHeight) {
 	window_.setFramerateLimit(kTargetFps);
 
@@ -55,8 +57,7 @@ void Game::processInput() {
 
 		if (event.type == sf::Event::MouseButtonPressed) {
 			if (currentState_ == GameState::Start || currentState_ == GameState::GameOver) {
-				resetGame();
-				setState(GameState::Playing);
+				startRound();
 			} else if (currentState_ == GameState::Playing) {
 				bird_.flap();
 			}
@@ -80,11 +81,17 @@ void Game::processInput() {
 
 		if (key == sf::Keyboard::Enter || key == sf::Keyboard::Space) {
 			if (currentState_ == GameState::Start || currentState_ == GameState::GameOver) {
-				resetGame();
-				setState(GameState::Playing);
+				startRound();
+			} else if (currentState_ == GameState::Paused && key == sf::Keyboard::Enter) {
+				startRound();
 			} else if (currentState_ == GameState::Playing && key == sf::Keyboard::Space) {
 				bird_.flap();
 			}
+			continue;
+		}
+
+		if (key == sf::Keyboard::R && currentState_ == GameState::GameOver) {
+			startRound();
 			continue;
 		}
 
@@ -115,7 +122,7 @@ void Game::update(float deltaTime) {
 	}
 
 	if (hasPipeCollision || birdBounds.top <= 0.0f || (birdBounds.top + birdBounds.height) >= groundY_) {
-		setState(GameState::GameOver);
+		enterGameOver();
 		return;
 	}
 
@@ -139,8 +146,21 @@ void Game::render() {
 	window_.draw(ground);
 
 	bird_.render(window_);
-	ui_.render(window_, currentState_, score_.getCurrentScore());
+	ui_.render(window_, currentState_, score_.getCurrentScore(), bestScore_, lastScore_);
 	window_.display();
+}
+
+void Game::startRound() {
+	resetGame();
+	setState(GameState::Playing);
+}
+
+void Game::enterGameOver() {
+	lastScore_ = score_.getCurrentScore();
+	if (lastScore_ > bestScore_) {
+		bestScore_ = lastScore_;
+	}
+	setState(GameState::GameOver);
 }
 
 void Game::resetGame() {

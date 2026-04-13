@@ -8,7 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
-add_executable(flappy_bird_week3
+add_executable(flappy_bird_week4
     main.cpp
     src/core/Game.cpp
     src/entities/Bird.cpp
@@ -18,10 +18,10 @@ add_executable(flappy_bird_week3
     src/systems/Score.cpp
 )
 
-target_include_directories(flappy_bird_week3 PRIVATE src)
+target_include_directories(flappy_bird_week4 PRIVATE src)
 
 if (TARGET SFML::Graphics)
-    target_link_libraries(flappy_bird_week3 PRIVATE SFML::Graphics SFML::Window SFML::System)
+    target_link_libraries(flappy_bird_week4 PRIVATE SFML::Graphics SFML::Window SFML::System)
 else()
-    target_link_libraries(flappy_bird_week3 PRIVATE sfml-graphics sfml-window sfml-system)
+    target_link_libraries(flappy_bird_week4 PRIVATE sfml-graphics sfml-window sfml-system)
 endif()

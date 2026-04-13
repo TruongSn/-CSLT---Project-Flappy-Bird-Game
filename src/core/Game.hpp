@@ -17,6 +17,8 @@ private:
 	void processInput();
 	void update(float deltaTime);
 	void render();
+	void startRound();
+	void enterGameOver();
 	void resetGame();
 	void setState(GameState nextState);
 
@@ -26,6 +28,8 @@ private:
 	Score score_;
 	Bird bird_;
 	PipeManager pipeManager_;
+	int bestScore_;
+	int lastScore_;
 	float groundY_;
 };
 

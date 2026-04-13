@@ -1,6 +1,6 @@
 ﻿# Dự án Flappy Bird 2D Desktop Offline
 
-Đây là dự án game Flappy Bird chạy trên desktop bằng C++17 và SFML. Repository đã hoàn thành mốc Tuần 3 cho phần core loop integration: tích hợp bird + pipe manager theo thứ tự update gameplay, kiểm tra va chạm cơ bản và cộng điểm khi qua ống.
+Đây là dự án game Flappy Bird chạy trên desktop bằng C++17 và SFML. Repository đã hoàn thành mốc Tuần 4 cho phần score/state flow: HUD điểm trong lúc chơi, game over hiển thị điểm cuối, lưu best score trong phiên chạy, restart và reset game rõ ràng.
 
 ## Mục tiêu dự án
 
@@ -23,13 +23,15 @@ Phần mở rộng sau MVP:
 
 ## Trạng thái hiện tại
 
-Repository hiện ở trạng thái sau khi chốt milestone Tuần 3.
+Repository hiện ở trạng thái sau khi chốt milestone Tuần 4.
 
 - Đã có entry point chạy được từ `main.cpp`.
 - Đã có `GameState` và game loop trong `src/core/Game.*`.
 - Đã có scaffold UI trong `src/ui/UI.*` và scaffold điểm trong `src/systems/Score.*`.
 - Đã tích hợp `Bird` vào luồng `Start -> Playing -> GameOver`.
 - Đã tích hợp `PipeManager` vào gameplay loop và stage cộng điểm theo pipe pass.
+- Đã hoàn thiện flow game over, restart và reset cho vòng chơi mới.
+- Đã có best score theo phiên chạy để hỗ trợ demo gameplay.
 - Đã có cấu hình build CMake trong `CMakeLists.txt`.
 - Module `Collision` và `HighScore` vẫn chờ hoàn thiện theo timeline tuần tiếp theo.
 
@@ -108,7 +110,7 @@ project-root/
 - `docs/`: ghi chú thiết kế và định hướng hiện thực ở cấp dự án.
 - `tests/manual/`: checklist kiểm thử tay và ghi chú QA.
 
-## Hướng dẫn build và chạy (Tuần 3)
+## Hướng dẫn build và chạy (Tuần 4)
 
 Các bước bên dưới dùng để chạy bản scaffold hiện tại.
 
@@ -132,21 +134,22 @@ cmake --build build --config Release
 Với generator nhiều cấu hình (Visual Studio):
 
 ```bash
-./build/Release/flappy_bird_week3.exe
+./build/Release/flappy_bird_week4.exe
 ```
 
 Với generator một cấu hình (Ninja/MinGW Makefiles):
 
 ```bash
-./build/flappy_bird_week3.exe
+./build/flappy_bird_week4.exe
 ```
 
-Điều khiển ở bản Tuần 3:
+Điều khiển ở bản Tuần 4:
 
 - `Enter` / `Space` / click chuột: bắt đầu hoặc chơi lại
 - `Space` / click chuột khi đang chơi: flap
 - `Esc`: pause hoặc resume
 - Va chạm trần, mặt đất hoặc ống: game over
+- Ở game over: `R` cũng có thể chơi lại
 
 ## Quy trình làm việc nhóm
 
