@@ -37,9 +37,10 @@ void UI::render(sf::RenderWindow& window, GameState state, int currentScore) con
 	switch (state) {
 		case GameState::Start:
 			drawCenteredText(window, "FLAPPY BIRD", 48U, 180.0f, sf::Color::White);
-			drawCenteredText(window, "Week 1 Scaffold Ready", 28U, 250.0f, sf::Color(210, 220, 240));
-			drawCenteredText(window, "Press ENTER / SPACE / Click to start", 22U, 380.0f, sf::Color(235, 235, 235));
-			drawCenteredText(window, "Press ESC to pause when playing", 18U, 430.0f, sf::Color(185, 200, 215));
+				drawCenteredText(window, "Week 2 Bird Integration", 28U, 250.0f, sf::Color(210, 220, 240));
+				drawCenteredText(window, "Press ENTER / SPACE / Click to start", 22U, 380.0f, sf::Color(235, 235, 235));
+				drawCenteredText(window, "Press SPACE / Click to flap", 18U, 420.0f, sf::Color(185, 200, 215));
+				drawCenteredText(window, "Press ESC to pause", 18U, 450.0f, sf::Color(185, 200, 215));
 			break;
 
 		case GameState::Playing: {
@@ -51,8 +52,8 @@ void UI::render(sf::RenderWindow& window, GameState state, int currentScore) con
 			scoreText.setPosition(20.0f, 18.0f);
 			window.draw(scoreText);
 
-			drawCenteredText(window, "Core loop is running", 20U, 70.0f, sf::Color(205, 215, 235));
-			drawCenteredText(window, "Press G to simulate Game Over", 18U, 105.0f, sf::Color(185, 200, 215));
+				drawCenteredText(window, "SPACE / Click: flap", 20U, 70.0f, sf::Color(205, 215, 235));
+				drawCenteredText(window, "Hit top or ground to lose", 18U, 105.0f, sf::Color(185, 200, 215));
 			break;
 		}
 

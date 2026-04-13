@@ -2,19 +2,21 @@
 
 #include <array>
 
+#include "../config/GameplayConfig.hpp"
+
 namespace {
-constexpr unsigned int kWindowWidth = 480U;
-constexpr unsigned int kWindowHeight = 720U;
 constexpr unsigned int kTargetFps = 60U;
 }  // namespace
 
 Game::Game()
-	: window_(sf::VideoMode(kWindowWidth, kWindowHeight),
-			  "Flappy Bird - Week 1",
+	: window_(sf::VideoMode(GameplayConfig::WindowWidth, GameplayConfig::WindowHeight),
+			  GameplayConfig::WindowTitle,
 			  sf::Style::Titlebar | sf::Style::Close),
 	  currentState_(GameState::Start),
 	  ui_(),
-	  score_() {
+	  score_(),
+	  bird_(),
+	  groundY_(static_cast<float>(GameplayConfig::WindowHeight) - GameplayConfig::GroundHeight) {
 	window_.setFramerateLimit(kTargetFps);
 
 	const std::array<std::string, 3> fontCandidates = {
@@ -54,6 +56,8 @@ void Game::processInput() {
 			if (currentState_ == GameState::Start || currentState_ == GameState::GameOver) {
 				resetGame();
 				setState(GameState::Playing);
+			} else if (currentState_ == GameState::Playing) {
+				bird_.flap();
 			}
 			continue;
 		}
@@ -77,6 +81,8 @@ void Game::processInput() {
 			if (currentState_ == GameState::Start || currentState_ == GameState::GameOver) {
 				resetGame();
 				setState(GameState::Playing);
+			} else if (currentState_ == GameState::Playing && key == sf::Keyboard::Space) {
+				bird_.flap();
 			}
 			continue;
 		}
@@ -93,17 +99,31 @@ void Game::update(float deltaTime) {
 		return;
 	}
 
-	(void)deltaTime;
+	bird_.update(deltaTime);
+
+	const sf::FloatRect birdBounds = bird_.getBounds();
+	if (birdBounds.top <= 0.0f || (birdBounds.top + birdBounds.height) >= groundY_) {
+		setState(GameState::GameOver);
+	}
 }
 
 void Game::render() {
-	window_.clear(sf::Color(32, 41, 57));
+	window_.clear(sf::Color(113, 197, 236));
+
+	sf::RectangleShape ground(
+		sf::Vector2f(static_cast<float>(window_.getSize().x), GameplayConfig::GroundHeight));
+	ground.setPosition(0.0f, groundY_);
+	ground.setFillColor(sf::Color(223, 200, 134));
+	window_.draw(ground);
+
+	bird_.render(window_);
 	ui_.render(window_, currentState_, score_.getCurrentScore());
 	window_.display();
 }
 
 void Game::resetGame() {
 	score_.reset();
+	bird_.reset();
 }
 
 void Game::setState(GameState nextState) {

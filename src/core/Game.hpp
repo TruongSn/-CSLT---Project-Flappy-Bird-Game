@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "../entities/Bird.hpp"
 #include "../systems/Score.hpp"
 #include "../ui/UI.hpp"
 #include "GameState.hpp"
@@ -22,5 +23,7 @@ private:
 	GameState currentState_;
 	UI ui_;
 	Score score_;
+	Bird bird_;
+	float groundY_;
 };
 

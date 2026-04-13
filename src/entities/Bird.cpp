@@ -1,23 +1,72 @@
-﻿/*
-Mục đích
-- File hiện thực dự kiến cho entity Bird.
+﻿#include "Bird.hpp"
 
-Trách nhiệm dự kiến
-- Áp dụng gravity và lực flap.
-- Cập nhật chuyển động, góc xoay và dữ liệu hiển thị.
-- Đặt lại trạng thái chim sạch sẽ khi chơi lại.
+#include <algorithm>
 
-Các vùng logic dự kiến
-- Khởi tạo và thiết lập phần hiển thị tạm.
-- Cập nhật vật lý theo từng frame.
-- Gọi lệnh vẽ bằng primitive của SFML hoặc sprite asset.
-- Đặt lại trạng thái cho luồng Start và Restart.
+#include "../config/GameplayConfig.hpp"
 
-Phụ thuộc có thể dùng
-- Các kiểu đồ họa của SFML.
-- src/config/GameplayConfig.hpp
+namespace {
+constexpr float kRiseRotationDegrees = -22.0f;
+constexpr float kFallRotationDegrees = 68.0f;
+const sf::Color kBirdColor(255, 220, 70);
+}  // namespace
 
-Ghi chú cho lần hiện thực sau
-- Giữ vật lý đủ ổn định để dễ tinh chỉnh.
-- Không xử lý giải va chạm ở đây; chỉ nên cung cấp dữ liệu.
-*/
+Bird::Bird()
+	: shape(sf::Vector2f(GameplayConfig::BirdWidth, GameplayConfig::BirdHeight)),
+	  startPosition(GameplayConfig::BirdSpawnX, GameplayConfig::BirdSpawnY),
+	  verticalVelocity(0.0f),
+	  rotationDegrees(0.0f) {
+	shape.setFillColor(kBirdColor);
+	shape.setOrigin(GameplayConfig::BirdWidth * 0.5f, GameplayConfig::BirdHeight * 0.5f);
+	reset();
+}
+
+void Bird::reset() {
+	shape.setPosition(startPosition);
+	verticalVelocity = 0.0f;
+	rotationDegrees = 0.0f;
+	shape.setRotation(rotationDegrees);
+}
+
+void Bird::flap() {
+	verticalVelocity = GameplayConfig::BirdFlapVelocity;
+}
+
+void Bird::update(float dt) {
+	if (dt <= 0.0f) {
+		return;
+	}
+
+	verticalVelocity += GameplayConfig::BirdGravity * dt;
+	verticalVelocity = std::clamp(
+		verticalVelocity,
+		GameplayConfig::BirdMaxRiseSpeed,
+		GameplayConfig::BirdMaxFallSpeed);
+
+	shape.move(0.0f, verticalVelocity * dt);
+
+	const float normalizedFallSpeed = std::clamp(
+		verticalVelocity / GameplayConfig::BirdMaxFallSpeed,
+		-1.0f,
+		1.0f);
+
+	rotationDegrees =
+		kRiseRotationDegrees +
+		((normalizedFallSpeed + 1.0f) * 0.5f) * (kFallRotationDegrees - kRiseRotationDegrees);
+	shape.setRotation(rotationDegrees);
+}
+
+void Bird::render(sf::RenderTarget& target) const {
+	target.draw(shape);
+}
+
+sf::FloatRect Bird::getBounds() const {
+	return shape.getGlobalBounds();
+}
+
+sf::Vector2f Bird::getPosition() const {
+	return shape.getPosition();
+}
+
+float Bird::getVerticalVelocity() const {
+	return verticalVelocity;
+}

@@ -67,7 +67,7 @@ Tài liệu này dùng để:
 
 | Thành viên | Nhiệm vụ chính | Đầu ra cần bàn giao | Trạng thái | % hoàn thành | Ghi chú |
 | --- | --- | --- | --- | --- | --- |
-| Lê Đoàn Nhật Huy | Tích hợp `Bird` vào game loop tổng, hoàn thành chuyển state từ bắt đầu sang đang chơi | Bird được gọi update/render trong luồng chơi | Chưa cập nhật | 0% | |
+| Lê Đoàn Nhật Huy | Tích hợp `Bird` vào game loop tổng, hoàn thành chuyển state từ bắt đầu sang đang chơi | Bird được gọi update/render trong luồng chơi | Hoàn thành | 100% | Đã tích hợp luồng input flap, update bird và render bird trong core loop |
 | Trần Vũ Anh Kiệt | Hiện thực `Bird`: flap, gravity, velocity, reset, render placeholder | Bird bay lên khi nhấn phím/click, rơi tự nhiên, reset được | Chưa cập nhật | 0% | |
 | Nguyễn Trường Sơn | Chuẩn bị tài nguyên tạm cho bird, background, ground, pipe, font | Bộ asset tối thiểu để chạy MVP | Hoàn thành | 100% | Đã tạo các ảnh placeholder (bird, pipe, bg, base) và copy font chữ cơ bản |
 
@@ -126,7 +126,7 @@ Tài liệu này dùng để:
 | Tuần | Công việc chính | Trạng thái | % hoàn thành | Minh chứng | Ghi chú |
 | --- | --- | --- | --- | --- | --- |
 | 1 | Scaffold, cấu trúc thư mục, `GameState`, README bản đầu | Hoàn thành | 100% | `main.cpp`, `src/core/Game*`, `src/ui/UI*`, `src/systems/Score*`, `CMakeLists.txt`, `README.md` | Milestone Tuần 1 đã hoàn tất code scaffold, sẵn sàng build khi máy có CMake + SFML |
-| 2 | Tích hợp `Bird` vào game loop | Chưa cập nhật | 0% | | |
+| 2 | Tích hợp `Bird` vào game loop | Hoàn thành | 100% | `src/core/Game*`, `src/ui/UI.cpp`, `CMakeLists.txt`, `src/entities/Bird.cpp` | Mốc Tuần 2 hoàn tất tích hợp Bird vào gameplay loop |
 | 3 | Tích hợp `PipeManager` vào gameplay loop | Chưa cập nhật | 0% | | |
 | 4 | `Score`, HUD, `GameOver`, restart | Chưa cập nhật | 0% | | |
 | 5 | Polish UI | Chưa cập nhật | 0% | | |
