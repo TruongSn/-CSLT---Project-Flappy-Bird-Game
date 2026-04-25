@@ -47,5 +47,6 @@ private:
     sf::Vector2f startPosition;
     float verticalVelocity;
     float rotationDegrees;
+    bool wasResetThisFrame;
 };
 
