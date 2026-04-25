@@ -26,6 +26,13 @@ Ghi chú cho lần hiện thực sau
 
 #include <algorithm>
 
+namespace {
+constexpr float UpwardTiltDegrees = -22.0f;
+constexpr float NeutralTiltDegrees = 4.0f;
+constexpr float DownwardTiltDegrees = 28.0f;
+constexpr float RotationLerpSpeed = 10.0f;
+}
+
 Bird::Bird()
     : startPosition(GameplayConfig::BirdSpawnX, GameplayConfig::BirdSpawnY),
       verticalVelocity(0.0f),
@@ -71,14 +78,16 @@ void Bird::update(float dt) {
 
     shape.move(0.0f, verticalVelocity * dt);
 
-    if (verticalVelocity < 0.0f) {
-        rotationDegrees = -20.0f;
-    } else if (verticalVelocity < 200.0f) {
-        rotationDegrees = 5.0f;
-    } else {
-        rotationDegrees = 25.0f;
+    float targetRotation = NeutralTiltDegrees;
+
+    if (verticalVelocity < -60.0f) {
+        targetRotation = UpwardTiltDegrees;
+    } else if (verticalVelocity > 180.0f) {
+        targetRotation = DownwardTiltDegrees;
     }
 
+    const float blend = std::min(1.0f, RotationLerpSpeed * dt);
+    rotationDegrees += (targetRotation - rotationDegrees) * blend;
     shape.setRotation(rotationDegrees);
 }
 
